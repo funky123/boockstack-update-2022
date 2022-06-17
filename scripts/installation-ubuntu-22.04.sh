@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "This script installs a new BookStack instance on a fresh Ubuntu 22.04 server."
+echo "This script installs a new BookStack instance on a fresh Ubuntu 22.04 server for migrating Data afterwards "
 echo "This script does not ensure system security."
 echo ""
 
@@ -139,7 +139,8 @@ function run_update_bookstack_env() {
 # Run the BookStack database migrations for the first time
 function run_bookstack_database_migrations() {
   cd "$BOOKSTACK_DIR" || exit
-  php artisan migrate --no-interaction --force
+  # Do NOT run this so data migration can be done earlier!
+  # php artisan migrate --no-interaction --force
 }
 
 # Set file and folder permissions
@@ -257,3 +258,4 @@ info_msg "- Access URL: http://$CURRENT_IP/ or http://$DOMAIN/"
 info_msg "- BookStack install path: $BOOKSTACK_DIR"
 info_msg "- Install script log: $LOGPATH"
 info_msg "---------------------------------------------------------------"
+info_msg "Now run restore DB and Files accoring to https://www.bookstackapp.com/docs/admin/backup-restore/"
